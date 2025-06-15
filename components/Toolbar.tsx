@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import useBoardStore from '@/store/boardStore'
 import ImageUploadModal from './ImageUploadModal'
 import ImageManager from './ImageManager'
+import TimelineTemplateModal from './TimelineTemplateModal'
 
 const tools = [
   { id: 'card', name: 'Card', emoji: '📝', color: '#FFB6E1' },
@@ -20,10 +21,20 @@ export default function Toolbar({ boardId }: ToolbarProps) {
   const { addElement } = useBoardStore()
   const [showImageUpload, setShowImageUpload] = useState(false)
   const [showImageManager, setShowImageManager] = useState(false)
+  const [showTimelineTemplate, setShowTimelineTemplate] = useState(false)
+  const [timelinePosition, setTimelinePosition] = useState({ x: 100, y: 100 })
 
   const handleAddElement = (type: 'card' | 'image' | 'timeline') => {
     if (type === 'image') {
       setShowImageUpload(true)
+      return
+    }
+
+    if (type === 'timeline') {
+      const randomX = Math.random() * (window.innerWidth - 600)
+      const randomY = Math.random() * (window.innerHeight - 400)
+      setTimelinePosition({ x: randomX, y: randomY })
+      setShowTimelineTemplate(true)
       return
     }
 
@@ -100,6 +111,12 @@ export default function Toolbar({ boardId }: ToolbarProps) {
         boardId={boardId}
         isOpen={showImageManager}
         onClose={() => setShowImageManager(false)}
+      />
+
+      <TimelineTemplateModal
+        isOpen={showTimelineTemplate}
+        onClose={() => setShowTimelineTemplate(false)}
+        position={timelinePosition}
       />
     </>
   )

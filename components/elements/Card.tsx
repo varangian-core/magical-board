@@ -11,13 +11,18 @@ interface CardProps {
 }
 
 export default function Card({ element, isSelected, onSelect, onDragEnd }: CardProps) {
-  const { updateElement } = useBoardStore()
+  const { updateElement, deleteElement } = useBoardStore()
   const [isEditingHeader, setIsEditingHeader] = useState(false)
   const [isEditingText, setIsEditingText] = useState(false)
   const [headerText, setHeaderText] = useState((element.content as CardContent).header)
   const [mainText, setMainText] = useState((element.content as CardContent).text)
   
   const content = element.content as CardContent
+
+  const handleDelete = (e: any) => {
+    e.cancelBubble = true
+    deleteElement(element.id)
+  }
 
   const handleHeaderDblClick = () => {
     setIsEditingHeader(true)
@@ -211,6 +216,30 @@ export default function Card({ element, isSelected, onSelect, onDragEnd }: CardP
         fill="white"
         opacity={0.8}
       />
+
+      {/* Close button */}
+      <Group
+        x={element.size.width - 30}
+        y={10}
+        onClick={handleDelete}
+      >
+        <Circle
+          radius={15}
+          fill="white"
+          opacity={0.9}
+        />
+        <Text
+          x={0}
+          y={0}
+          text="✕"
+          fontSize={16}
+          align="center"
+          verticalAlign="middle"
+          offsetX={5}
+          offsetY={8}
+          fill={content.color}
+        />
+      </Group>
 
       {/* Main text */}
       <Text

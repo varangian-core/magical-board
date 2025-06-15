@@ -8,6 +8,7 @@ import useBoardStore from '@/store/boardStore'
 import userStorage from '@/lib/userStorage'
 import Card from './elements/Card'
 import ImageElement from './elements/ImageElement'
+import Timeline from './elements/Timeline'
 import Toolbar from './Toolbar'
 
 interface BoardCanvasProps {
@@ -119,6 +120,16 @@ export default function BoardCanvas({ boardId }: BoardCanvasProps) {
                     onSelect={() => setSelectedElement(element.id)}
                     onDragEnd={(e) => handleDragEnd(element.id, e)}
                     onTransformEnd={(e) => handleTransformEnd(element.id, e)}
+                  />
+                )
+              } else if (element.type === 'timeline') {
+                return (
+                  <Timeline
+                    key={element.id}
+                    element={element}
+                    isSelected={selectedElement === element.id}
+                    onSelect={() => setSelectedElement(element.id)}
+                    onDragEnd={(e) => handleDragEnd(element.id, e)}
                   />
                 )
               }
