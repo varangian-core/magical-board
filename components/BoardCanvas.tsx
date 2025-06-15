@@ -6,6 +6,7 @@ import Konva from 'konva'
 import { motion } from 'framer-motion'
 import useBoardStore from '@/store/boardStore'
 import Card from './elements/Card'
+import ImageElement from './elements/ImageElement'
 import Toolbar from './Toolbar'
 
 interface BoardCanvasProps {
@@ -46,9 +47,26 @@ export default function BoardCanvas({ boardId }: BoardCanvasProps) {
     })
   }
 
+  const handleTransformEnd = (id: string, e: any) => {
+    const node = e.target
+    updateElement(id, {
+      size: {
+        width: Math.max(50, node.width() * node.scaleX()),
+        height: Math.max(50, node.height() * node.scaleY()),
+      },
+      rotation: node.rotation(),
+      position: {
+        x: node.x(),
+        y: node.y(),
+      },
+    })
+    node.scaleX(1)
+    node.scaleY(1)
+  }
+
   return (
     <>
-      <Toolbar />
+      <Toolbar boardId={boardId} />
       <div className="relative w-full h-full bg-gradient-to-br from-purple-50 to-pink-50">
         <Stage
           ref={stageRef}
@@ -67,6 +85,17 @@ export default function BoardCanvas({ boardId }: BoardCanvasProps) {
                     isSelected={selectedElement === element.id}
                     onSelect={() => setSelectedElement(element.id)}
                     onDragEnd={(e) => handleDragEnd(element.id, e)}
+                  />
+                )
+              } else if (element.type === 'image') {
+                return (
+                  <ImageElement
+                    key={element.id}
+                    element={element}
+                    isSelected={selectedElement === element.id}
+                    onSelect={() => setSelectedElement(element.id)}
+                    onDragEnd={(e) => handleDragEnd(element.id, e)}
+                    onTransformEnd={(e) => handleTransformEnd(element.id, e)}
                   />
                 )
               }
