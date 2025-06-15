@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
+import ErrorBoundary from '@/components/ErrorBoundary'
 
 const BoardCanvas = dynamic(() => import('@/components/BoardCanvas'), {
   ssr: false,
@@ -44,8 +45,10 @@ export default function BoardPage() {
   }
 
   return (
-    <div className="h-screen w-screen overflow-hidden">
-      <BoardCanvas boardId={boardId} />
-    </div>
+    <ErrorBoundary>
+      <div className="h-screen w-screen overflow-hidden">
+        <BoardCanvas boardId={boardId} />
+      </div>
+    </ErrorBoundary>
   )
 }

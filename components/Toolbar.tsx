@@ -33,9 +33,6 @@ export default function Toolbar({ boardId }: ToolbarProps) {
     addElement({
       type,
       position: { x: randomX, y: randomY },
-      content: type === 'card' 
-        ? { text: 'New Magical Card ✨', color: '#FFB6E1' }
-        : { events: [] },
     })
   }
 

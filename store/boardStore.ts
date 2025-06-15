@@ -1,6 +1,14 @@
 import { create } from 'zustand'
 import { nanoid } from 'nanoid'
 
+export interface CardContent {
+  header: string
+  text: string
+  color: string
+  userIcon: string
+  userName: string
+}
+
 export interface BoardElement {
   id: string
   type: 'card' | 'image' | 'timeline'
@@ -30,22 +38,35 @@ const useBoardStore = create<BoardStore>((set) => ({
   currentUser: null,
 
   addElement: (element) =>
-    set((state) => ({
-      elements: [
-        ...state.elements,
-        {
-          id: nanoid(),
-          type: 'card',
-          position: { x: 100, y: 100 },
-          size: { width: 300, height: 200 },
-          rotation: 0,
-          zIndex: state.elements.length,
-          content: { text: 'New Card', color: '#FFB6E1' },
-          createdBy: state.currentUser?.id || 'anonymous',
-          ...element,
-        } as BoardElement,
-      ],
-    })),
+    set((state) => {
+      const user = state.currentUser
+      const defaultContent = element.type === 'card' && user
+        ? {
+            header: 'New Card',
+            text: 'Double-click to edit...',
+            color: user.avatar.color,
+            userIcon: user.avatar.emoji,
+            userName: user.name
+          }
+        : element.content
+
+      return {
+        elements: [
+          ...state.elements,
+          {
+            id: nanoid(),
+            type: 'card',
+            position: { x: 100, y: 100 },
+            size: { width: 300, height: 200 },
+            rotation: 0,
+            zIndex: state.elements.length,
+            content: defaultContent,
+            createdBy: state.currentUser?.id || 'anonymous',
+            ...element,
+          } as BoardElement,
+        ],
+      }
+    }),
 
   updateElement: (id, updates) =>
     set((state) => ({

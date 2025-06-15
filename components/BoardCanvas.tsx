@@ -5,6 +5,7 @@ import { Stage, Layer } from 'react-konva'
 import type Konva from 'konva'
 import { motion } from 'framer-motion'
 import useBoardStore from '@/store/boardStore'
+import userStorage from '@/lib/userStorage'
 import Card from './elements/Card'
 import ImageElement from './elements/ImageElement'
 import Toolbar from './Toolbar'
@@ -17,9 +18,15 @@ export default function BoardCanvas({ boardId }: BoardCanvasProps) {
   const stageRef = useRef<Konva.Stage>(null)
   const [stageSize, setStageSize] = useState({ width: 0, height: 0 })
   const [isReady, setIsReady] = useState(false)
-  const { elements, addElement, updateElement, selectedElement, setSelectedElement } = useBoardStore()
+  const { elements, addElement, updateElement, selectedElement, setSelectedElement, setCurrentUser } = useBoardStore()
 
   useEffect(() => {
+    // Set current user in the store
+    const currentUser = userStorage.getCurrentUser()
+    if (currentUser) {
+      setCurrentUser(currentUser)
+    }
+
     const updateSize = () => {
       setStageSize({
         width: window.innerWidth,
