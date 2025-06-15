@@ -1,7 +1,7 @@
 import { Group, Image as KonvaImage, Rect, Transformer } from 'react-konva'
 import { BoardElement } from '@/store/boardStore'
 import { useEffect, useRef, useState } from 'react'
-import Konva from 'konva'
+import type Konva from 'konva'
 
 interface ImageElementProps {
   element: BoardElement

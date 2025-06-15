@@ -38,7 +38,8 @@ export default function Dashboard({ currentUser, onUserSwitch, onNewUser }: Dash
       }))
       
       setShowCreateBoard(false)
-      // Navigate to the new board
+      
+      // Navigate to the board using Next.js router
       window.location.href = `/board/${board.id}`
     }
   }

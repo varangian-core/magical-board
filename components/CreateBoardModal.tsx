@@ -2,7 +2,10 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { Kingdom } from '@/lib/kingdoms'
+import boardStorage from '@/lib/boardStorage'
+import userStorage from '@/lib/userStorage'
 
 interface CreateBoardModalProps {
   kingdom: Kingdom
@@ -13,6 +16,7 @@ interface CreateBoardModalProps {
 export default function CreateBoardModal({ kingdom, onClose, onCreate }: CreateBoardModalProps) {
   const [boardName, setBoardName] = useState('')
   const [boardDescription, setBoardDescription] = useState('')
+  const router = useRouter()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()

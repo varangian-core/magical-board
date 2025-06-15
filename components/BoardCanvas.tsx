@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { Stage, Layer, Rect, Text } from 'react-konva'
-import Konva from 'konva'
+import { Stage, Layer } from 'react-konva'
+import type Konva from 'konva'
 import { motion } from 'framer-motion'
 import useBoardStore from '@/store/boardStore'
 import Card from './elements/Card'
@@ -16,6 +16,7 @@ interface BoardCanvasProps {
 export default function BoardCanvas({ boardId }: BoardCanvasProps) {
   const stageRef = useRef<Konva.Stage>(null)
   const [stageSize, setStageSize] = useState({ width: 0, height: 0 })
+  const [isReady, setIsReady] = useState(false)
   const { elements, addElement, updateElement, selectedElement, setSelectedElement } = useBoardStore()
 
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function BoardCanvas({ boardId }: BoardCanvasProps) {
         width: window.innerWidth,
         height: window.innerHeight,
       })
+      setIsReady(true)
     }
 
     updateSize()
@@ -62,6 +64,20 @@ export default function BoardCanvas({ boardId }: BoardCanvasProps) {
     })
     node.scaleX(1)
     node.scaleY(1)
+  }
+
+  if (!isReady) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50">
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          className="text-6xl"
+        >
+          ⭐
+        </motion.div>
+      </div>
+    )
   }
 
   return (
