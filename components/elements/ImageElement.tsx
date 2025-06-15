@@ -1,7 +1,8 @@
-import { Group, Image as KonvaImage, Rect, Transformer } from 'react-konva'
+import { Group, Image as KonvaImage, Rect, Transformer, Circle, Text } from 'react-konva'
 import { BoardElement } from '@/store/boardStore'
 import { useEffect, useRef, useState } from 'react'
 import type Konva from 'konva'
+import useBoardStore from '@/store/boardStore'
 
 interface ImageElementProps {
   element: BoardElement
@@ -21,6 +22,12 @@ export default function ImageElement({
   const imageRef = useRef<Konva.Image>(null)
   const transformerRef = useRef<Konva.Transformer>(null)
   const [image, setImage] = useState<HTMLImageElement | null>(null)
+  const { deleteElement } = useBoardStore()
+
+  const handleDelete = (e: any) => {
+    e.cancelBubble = true
+    deleteElement(element.id)
+  }
 
   useEffect(() => {
     const img = new window.Image()
@@ -82,6 +89,30 @@ export default function ImageElement({
           stroke={isSelected ? '#DDA0DD' : 'transparent'}
           strokeWidth={isSelected ? 3 : 0}
         />
+        
+        {/* Close button */}
+        <Group
+          x={element.size.width - 30}
+          y={10}
+          onClick={handleDelete}
+        >
+          <Circle
+            radius={15}
+            fill="#DDA0DD"
+            opacity={0.9}
+          />
+          <Text
+            x={0}
+            y={0}
+            text="✕"
+            fontSize={16}
+            align="center"
+            verticalAlign="middle"
+            offsetX={5}
+            offsetY={8}
+            fill="white"
+          />
+        </Group>
       </Group>
       {isSelected && (
         <Transformer

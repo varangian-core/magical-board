@@ -23,7 +23,7 @@ export default function TimelineTemplateModal({ isOpen, onClose, position }: Tim
         size: { width: 600, height: 400 },
         content: {
           template: selectedTemplate,
-          events: selectedTemplate.events,
+          nodes: selectedTemplate.nodes || [],
           style: selectedTemplate.style,
           userColor: currentUser.avatar.color
         }
@@ -81,22 +81,7 @@ export default function TimelineTemplateModal({ isOpen, onClose, position }: Tim
                   <p className="text-sm text-gray-600 mb-4">{template.description}</p>
                   
                   <div className="space-y-2">
-                    <p className="text-xs font-medium text-magical-purple">Preview:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {template.events.slice(0, 3).map((event, idx) => (
-                        <div 
-                          key={idx}
-                          className="text-xs px-2 py-1 rounded-full bg-magical-pink/20"
-                        >
-                          {event.icon} {event.title}
-                        </div>
-                      ))}
-                      {template.events.length > 3 && (
-                        <div className="text-xs px-2 py-1 text-gray-500">
-                          +{template.events.length - 3} more
-                        </div>
-                      )}
-                    </div>
+                    <p className="text-xs font-medium text-magical-purple">Style: {template.style}</p>
                   </div>
                 </motion.div>
               ))}
@@ -109,22 +94,21 @@ export default function TimelineTemplateModal({ isOpen, onClose, position }: Tim
                 className="border-t pt-6"
               >
                 <h3 className="text-lg font-semibold mb-3">
-                  {selectedTemplate.icon} {selectedTemplate.name} Events
+                  {selectedTemplate.icon} {selectedTemplate.name}
                 </h3>
-                <div className="grid grid-cols-3 gap-3 mb-6">
-                  {selectedTemplate.events.map((event) => (
-                    <div 
-                      key={event.id}
-                      className="p-3 rounded-lg border border-magical-pink/30"
-                      style={{ borderColor: event.color + '40' }}
-                    >
-                      <div className="flex items-center gap-2 mb-1">
-                        <span>{event.icon}</span>
-                        <span className="font-medium text-sm">{event.title}</span>
-                      </div>
-                      <p className="text-xs text-gray-600">{event.date}</p>
-                    </div>
-                  ))}
+                <p className="text-sm text-gray-600 mb-4">
+                  Create a {selectedTemplate.style} timeline. You can add time nodes and milestones, 
+                  then drag them to arrange your timeline layout.
+                </p>
+                <div className="flex gap-4">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">🕐</span>
+                    <span className="text-sm">Time nodes mark specific points in time</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl">⭐</span>
+                    <span className="text-sm">Milestones mark important events</span>
+                  </div>
                 </div>
               </motion.div>
             )}
