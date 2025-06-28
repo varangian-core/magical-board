@@ -1,0 +1,111 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  avatarId     String?       @map("avatar_id")
+  avatarName   String?       @map("avatar_name")
+  avatarEmoji  String?       @map("avatar_emoji")
+  avatarColor  String?       @map("avatar_color")
+  createdAt    DateTime      @default(now()) @map("created_at")
+  lastActive   DateTime      @default(now()) @map("last_active")
+  
+  createdBoards Board[]      @relation("BoardCreator")
+  boardElements BoardElement[] @relation("ElementCreator")
+  lockedElements BoardElement[] @relation("ElementLocker")
+  images        Image[]
+  boardUsers    BoardUser[]
+  
+  @@map("users")
+}
+
+model Board {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  kingdomId   String   @map("kingdom_id")
+  createdBy   String?  @map("created_by")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  
+  creator       User?          @relation("BoardCreator", fields: [createdBy], references: [id], onDelete: SetNull)
+  boardElements BoardElement[]
+  images        Image[]
+  boardUsers    BoardUser[]
+  
+  @@index([kingdomId])
+  @@index([createdBy])
+  @@map("boards")
+}
+
+model BoardElement {
+  id         String   @id @default(cuid())
+  boardId    String   @map("board_id")
+  type       ElementType
+  positionX  Int      @map("position_x")
+  positionY  Int      @map("position_y")
+  width      Int
+  height     Int
+  rotation   Float    @default(0)
+  zIndex     Int      @default(0) @map("z_index")
+  content    Json
+  createdBy  String?  @map("created_by")
+  lockedBy   String?  @map("locked_by")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  
+  board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  creator User?  @relation("ElementCreator", fields: [createdBy], references: [id], onDelete: SetNull)
+  locker  User?  @relation("ElementLocker", fields: [lockedBy], references: [id], onDelete: SetNull)
+  
+  @@index([boardId])
+  @@index([type])
+  @@map("board_elements")
+}
+
+model Image {
+  id        String   @id @default(cuid())
+  boardId   String   @map("board_id")
+  name      String
+  url       String   @db.Text
+  size      Int
+  mimeType  String?  @map("mime_type")
+  createdBy String?  @map("created_by")
+  createdAt DateTime @default(now()) @map("created_at")
+  
+  board   Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  creator User? @relation(fields: [createdBy], references: [id], onDelete: SetNull)
+  
+  @@index([boardId])
+  @@map("images")
+}
+
+model BoardUser {
+  boardId  String   @map("board_id")
+  userId   String   @map("user_id")
+  joinedAt DateTime @default(now()) @map("joined_at")
+  lastSeen DateTime @default(now()) @map("last_seen")
+  
+  board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@id([boardId, userId])
+  @@index([userId])
+  @@map("board_users")
+}
+
+enum ElementType {
+  card
+  image
+  timeline
+}

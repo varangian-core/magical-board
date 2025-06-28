@@ -1,11 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   images: {
     domains: ['localhost'],
   },
   swcMinify: true,
   experimental: {
     optimizeCss: true,
+    serverActions: true,
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
