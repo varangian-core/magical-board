@@ -31,28 +31,30 @@ export default function UserSelection({ onUserSelect, onUserCreate, onClose, exi
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-8 z-50">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-8 z-50">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        initial={{ opacity: 0, y: 20, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ type: "spring", bounce: 0.3 }}
         onClick={(e) => e.stopPropagation()}
-        className="magical-card p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+        className="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 p-8 rounded-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-white/20"
       >
-        <button
+        <motion.button
           onClick={onClose}
-          className="absolute top-4 right-4 text-2xl hover:rotate-90 transition-transform"
+          whileHover={{ rotate: 90 }}
+          className="absolute top-4 right-4 text-2xl text-white/80 hover:text-white transition-colors"
         >
           ✖️
-        </button>
+        </motion.button>
 
-        <h1 className="text-3xl font-bold text-center magical-gradient-text mb-6">
+        <h1 className="text-3xl font-bold text-center text-white mb-6">
           {isCreatingNew ? 'Create Your Guardian' : 'Choose Your Guardian'}
         </h1>
 
         {!isCreatingNew && existingUsers.length > 0 && (
           <>
             <div className="mb-6">
-              <h2 className="text-lg font-semibold text-magical-purple mb-4">
+              <h2 className="text-lg font-semibold text-white mb-4">
                 Existing Guardians
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -62,24 +64,26 @@ export default function UserSelection({ onUserSelect, onUserCreate, onClose, exi
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => onUserSelect(user)}
-                    className="p-4 rounded-xl border-2 border-magical-pink/30 
-                             hover:border-magical-purple bg-white/50 transition-all"
+                    className="p-4 rounded-xl border-2 border-white/20 
+                             hover:border-white/40 bg-white/10 hover:bg-white/20 transition-all"
                   >
                     <div className="text-3xl mb-1">{user.avatar.emoji}</div>
-                    <div className="font-medium">{user.name}</div>
-                    <div className="text-xs text-gray-600">{user.avatar.name}</div>
+                    <div className="font-medium text-white">{user.name}</div>
+                    <div className="text-xs text-white/60">{user.avatar.name}</div>
                   </motion.button>
                 ))}
               </div>
             </div>
 
             <div className="text-center my-6">
-              <button
+              <motion.button
                 onClick={() => setIsCreatingNew(true)}
-                className="magical-button"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all"
               >
                 Create New Guardian ✨
-              </button>
+              </motion.button>
             </div>
           </>
         )}
@@ -87,7 +91,7 @@ export default function UserSelection({ onUserSelect, onUserCreate, onClose, exi
         {isCreatingNew && (
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-magical-purple mb-2">
+              <label className="block text-sm font-medium text-white/90 mb-2">
                 Guardian Name
               </label>
               <input
@@ -95,14 +99,14 @@ export default function UserSelection({ onUserSelect, onUserCreate, onClose, exi
                 value={userName}
                 onChange={(e) => setUserName(e.target.value)}
                 placeholder="Enter your magical name..."
-                className="w-full px-4 py-3 rounded-lg border-2 border-magical-pink/30 
-                         focus:border-magical-purple focus:outline-none focus:ring-2 
-                         focus:ring-magical-purple/20 transition-all"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg 
+                         text-white placeholder-white/50 focus:outline-none focus:border-white/40 
+                         focus:bg-white/15 transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-magical-purple mb-4">
+              <label className="block text-sm font-medium text-white/90 mb-4">
                 Select Your Avatar
               </label>
               <div className="grid grid-cols-3 gap-4">
@@ -114,35 +118,39 @@ export default function UserSelection({ onUserSelect, onUserCreate, onClose, exi
                     onClick={() => setSelectedAvatar(avatar)}
                     className={`p-6 rounded-xl border-2 transition-all cursor-pointer
                       ${selectedAvatar?.id === avatar.id
-                        ? 'border-magical-purple bg-magical-purple/10 shadow-lg'
-                        : 'border-magical-pink/30 hover:border-magical-pink'
+                        ? 'border-white/60 bg-white/20 shadow-lg'
+                        : 'border-white/20 hover:border-white/40 bg-white/5'
                       }`}
                   >
                     <div className="text-4xl mb-2">{avatar.emoji}</div>
-                    <div className="text-sm font-medium">{avatar.name}</div>
+                    <div className="text-sm font-medium text-white">{avatar.name}</div>
                   </motion.button>
                 ))}
               </div>
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-3">
               {existingUsers.length > 0 && (
-                <button
+                <motion.button
                   onClick={() => setIsCreatingNew(false)}
-                  className="flex-1 px-4 py-2 border-2 border-magical-pink rounded-full
-                           hover:bg-magical-pink/10 transition-all"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="flex-1 px-4 py-3 bg-white/10 hover:bg-white/20 
+                           text-white rounded-lg font-medium transition-all"
                 >
                   Back
-                </button>
+                </motion.button>
               )}
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileHover={{ scale: (!userName || !selectedAvatar) ? 1 : 1.02 }}
+                whileTap={{ scale: (!userName || !selectedAvatar) ? 1 : 0.98 }}
                 onClick={handleCreateUser}
                 disabled={!userName || !selectedAvatar}
-                className={`flex-1 magical-button ${
-                  (!userName || !selectedAvatar) && 'opacity-50 cursor-not-allowed'
-                }`}
+                className={`flex-1 px-4 py-3 rounded-lg font-medium transition-all
+                  ${(userName && selectedAvatar) 
+                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg hover:shadow-xl' 
+                    : 'bg-white/5 text-white/30 cursor-not-allowed'
+                  }`}
               >
                 Transform into Guardian ✨
               </motion.button>

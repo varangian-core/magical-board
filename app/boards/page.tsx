@@ -129,7 +129,7 @@ export default function BoardsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-pink-900">
+    <div className="min-h-screen">
       {/* Animated stars background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {[...Array(30)].map((_, i) => (

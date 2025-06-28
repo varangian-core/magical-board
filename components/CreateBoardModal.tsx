@@ -26,23 +26,26 @@ export default function CreateBoardModal({ kingdom, onClose, onCreate }: CreateB
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-8 z-50">
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-8 z-50"
+         onClick={onClose}>
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ type: "spring", bounce: 0.3 }}
         onClick={(e) => e.stopPropagation()}
-        className="magical-card p-8 max-w-md w-full"
+        className="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 p-8 rounded-2xl max-w-md w-full shadow-2xl border border-white/20"
       >
         <div className="flex items-center gap-3 mb-6">
-          <span className="text-4xl">{kingdom.icon}</span>
-          <h2 className="text-2xl font-bold magical-gradient-text">
+          <span className="text-4xl">{kingdom.emoji}</span>
+          <h2 className="text-2xl font-bold text-white">
             New {kingdom.name} Board
           </h2>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label className="block text-sm font-medium text-magical-purple mb-2">
+            <label className="block text-sm font-medium text-white/90 mb-2">
               Board Name
             </label>
             <input
@@ -50,15 +53,15 @@ export default function CreateBoardModal({ kingdom, onClose, onCreate }: CreateB
               value={boardName}
               onChange={(e) => setBoardName(e.target.value)}
               placeholder="Enter a magical name..."
-              className="w-full px-4 py-3 rounded-lg border-2 border-magical-pink/30 
-                       focus:border-magical-purple focus:outline-none focus:ring-2 
-                       focus:ring-magical-purple/20 transition-all"
+              className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg 
+                       text-white placeholder-white/50 focus:outline-none focus:border-white/40 
+                       focus:bg-white/15 transition-all"
               autoFocus
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-magical-purple mb-2">
+            <label className="block text-sm font-medium text-white/90 mb-2">
               Description (optional)
             </label>
             <textarea
@@ -66,30 +69,36 @@ export default function CreateBoardModal({ kingdom, onClose, onCreate }: CreateB
               onChange={(e) => setBoardDescription(e.target.value)}
               placeholder="What magical adventures await..."
               rows={3}
-              className="w-full px-4 py-3 rounded-lg border-2 border-magical-pink/30 
-                       focus:border-magical-purple focus:outline-none focus:ring-2 
-                       focus:ring-magical-purple/20 transition-all resize-none"
+              className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg 
+                       text-white placeholder-white/50 focus:outline-none focus:border-white/40 
+                       focus:bg-white/15 transition-all resize-none"
             />
           </div>
 
-          <div className="flex gap-4 mt-6">
-            <button
+          <div className="flex gap-3 pt-2">
+            <motion.button
               type="button"
               onClick={onClose}
-              className="flex-1 px-4 py-2 border-2 border-magical-pink rounded-full
-                       hover:bg-magical-pink/10 transition-all"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="flex-1 px-4 py-3 bg-white/10 hover:bg-white/20 
+                       text-white rounded-lg font-medium transition-all"
             >
               Cancel
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               type="submit"
               disabled={!boardName.trim()}
-              className={`flex-1 magical-button ${
-                !boardName.trim() && 'opacity-50 cursor-not-allowed'
-              }`}
+              whileHover={{ scale: !boardName.trim() ? 1 : 1.02 }}
+              whileTap={{ scale: !boardName.trim() ? 1 : 0.98 }}
+              className={`flex-1 px-4 py-3 rounded-lg font-medium transition-all
+                ${boardName.trim() 
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg hover:shadow-xl' 
+                  : 'bg-white/5 text-white/30 cursor-not-allowed'
+                }`}
             >
               Create Board ✨
-            </button>
+            </motion.button>
           </div>
         </form>
       </motion.div>

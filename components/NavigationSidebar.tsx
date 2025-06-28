@@ -6,9 +6,10 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import userStorage from '@/lib/userStorage'
 import boardStorage from '@/lib/boardStorage'
+import { useNavigation } from './ClientLayout'
 
 export default function NavigationSidebar() {
-  const [isExpanded, setIsExpanded] = useState(true)
+  const { isExpanded, setIsExpanded } = useNavigation()
   const [currentUser, setCurrentUser] = useState<any>(null)
   const [recentBoards, setRecentBoards] = useState<any[]>([])
   const pathname = usePathname()
@@ -107,7 +108,7 @@ export default function NavigationSidebar() {
             animate={{ x: 0 }}
             exit={{ x: -300 }}
             transition={{ type: "spring", bounce: 0.2 }}
-            className="fixed left-0 top-0 h-full w-64 bg-gradient-to-b from-purple-900/95 to-blue-900/95 backdrop-blur-md border-r border-white/10 z-40 overflow-y-auto"
+            className="fixed left-0 top-0 h-screen w-64 bg-gradient-to-b from-purple-900 to-blue-900 backdrop-blur-md border-r border-white/10 z-40 overflow-y-auto"
           >
             <div className="p-6">
               {/* Logo/Title */}

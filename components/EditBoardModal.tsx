@@ -31,7 +31,7 @@ export default function EditBoardModal({ board, onClose, onSave }: EditBoardModa
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
         onClick={onClose}
       >
         <motion.div
@@ -39,7 +39,7 @@ export default function EditBoardModal({ board, onClose, onSave }: EditBoardModa
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.9, opacity: 0 }}
           transition={{ type: "spring", bounce: 0.3 }}
-          className="bg-gradient-to-br from-purple-900 to-blue-900 rounded-2xl p-8 max-w-md w-full shadow-2xl border border-white/20"
+          className="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 rounded-2xl p-8 max-w-md w-full shadow-2xl border border-white/20"
           onClick={(e) => e.stopPropagation()}
         >
           <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
@@ -47,9 +47,9 @@ export default function EditBoardModal({ board, onClose, onSave }: EditBoardModa
             Edit Board
           </h2>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-white/80 mb-2">
+              <label htmlFor="name" className="block text-sm font-medium text-white/90 mb-2">
                 Board Name
               </label>
               <input
@@ -57,7 +57,9 @@ export default function EditBoardModal({ board, onClose, onSave }: EditBoardModa
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-white/40 transition-colors"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg 
+                         text-white placeholder-white/50 focus:outline-none focus:border-white/40 
+                         focus:bg-white/15 transition-all"
                 placeholder="Enter board name..."
                 autoFocus
                 required
@@ -65,25 +67,28 @@ export default function EditBoardModal({ board, onClose, onSave }: EditBoardModa
             </div>
 
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-white/80 mb-2">
+              <label htmlFor="description" className="block text-sm font-medium text-white/90 mb-2">
                 Description (optional)
               </label>
               <textarea
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-white/40 transition-colors resize-none"
+                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg 
+                         text-white placeholder-white/50 focus:outline-none focus:border-white/40 
+                         focus:bg-white/15 transition-all resize-none"
                 placeholder="Describe your board..."
                 rows={3}
               />
             </div>
 
-            <div className="flex gap-3 pt-4">
+            <div className="flex gap-3 pt-2">
               <motion.button
                 type="submit"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex-1 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-shadow"
+                className="flex-1 py-3 bg-gradient-to-r from-purple-500 to-pink-500 
+                         text-white rounded-lg font-medium shadow-lg hover:shadow-xl transition-all"
               >
                 Save Changes
               </motion.button>
@@ -92,7 +97,8 @@ export default function EditBoardModal({ board, onClose, onSave }: EditBoardModa
                 onClick={onClose}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex-1 py-3 bg-white/10 hover:bg-white/20 text-white rounded-lg font-medium transition-colors"
+                className="flex-1 py-3 bg-white/10 hover:bg-white/20 
+                         text-white rounded-lg font-medium transition-all"
               >
                 Cancel
               </motion.button>

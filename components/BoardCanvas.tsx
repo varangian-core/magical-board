@@ -76,7 +76,7 @@ export default function BoardCanvas({ boardId }: BoardCanvasProps) {
 
   if (!isReady) {
     return (
-      <div className="h-screen w-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-pink-50">
+      <div className="h-screen w-screen flex items-center justify-center bg-gradient-to-br from-purple-900 via-blue-900 to-pink-900">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
@@ -91,7 +91,7 @@ export default function BoardCanvas({ boardId }: BoardCanvasProps) {
   return (
     <>
       <Toolbar boardId={boardId} />
-      <div className="relative w-full h-full bg-gradient-to-br from-purple-50 to-pink-50">
+      <div className="relative w-full h-full overflow-hidden bg-gradient-to-br from-purple-900 via-blue-900 to-pink-900">
         <Stage
           ref={stageRef}
           width={stageSize.width}

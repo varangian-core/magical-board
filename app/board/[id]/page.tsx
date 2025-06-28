@@ -46,7 +46,7 @@ export default function BoardPage() {
 
   return (
     <ErrorBoundary>
-      <div className="h-screen w-full overflow-hidden relative">
+      <div className="h-screen w-full overflow-hidden relative bg-gradient-to-br from-purple-900 via-blue-900 to-pink-900">
         <BoardCanvas boardId={boardId} />
       </div>
     </ErrorBoundary>

@@ -45,7 +45,7 @@ export default function Dashboard({ currentUser, onUserSwitch, onNewUser }: Dash
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-pink-900">
+    <div className="min-h-screen">
       {/* Animated stars background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {[...Array(50)].map((_, i) => (

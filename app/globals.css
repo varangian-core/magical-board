@@ -7,6 +7,14 @@
     --background: 240 100% 99%;
     --foreground: 320 40% 20%;
   }
+
+  html {
+    @apply h-full;
+  }
+
+  body {
+    @apply h-full bg-gradient-to-br from-purple-900 via-blue-900 to-pink-900;
+  }
 }
 
 @layer components {
@@ -64,5 +72,9 @@
   .magical-gradient-text {
     @apply bg-gradient-to-r from-magical-pink via-magical-purple to-magical-blue;
     @apply bg-clip-text text-transparent;
+  }
+
+  .bg-gradient-starry {
+    @apply bg-gradient-to-br from-purple-900 via-blue-900 to-pink-900;
   }
 }

@@ -20,7 +20,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     <NavigationContext.Provider value={{ isExpanded, setIsExpanded }}>
       <NavigationSidebar />
       <main className={`
-        min-h-screen transition-all duration-300
+        min-h-screen transition-all duration-300 bg-gradient-to-br from-purple-900 via-blue-900 to-pink-900
         ${isExpanded ? 'md:ml-64' : 'ml-0'}
       `}>
         {children}
