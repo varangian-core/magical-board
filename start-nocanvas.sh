@@ -6,7 +6,7 @@ YELLOW='\033[1;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-echo -e "${GREEN}🌟 Starting Magical Board Application 🌟${NC}"
+echo -e "${GREEN}🌟 Starting Magical Board Application (No Canvas) 🌟${NC}"
 echo ""
 
 # Check if Docker is installed
@@ -23,17 +23,14 @@ fi
 
 # Stop any running containers
 echo -e "${YELLOW}🛑 Stopping any existing containers...${NC}"
-docker-compose down
+docker-compose -f docker-compose.nocanvas.yml down
 
 # Build and start containers
-echo -e "${YELLOW}🔨 Building containers...${NC}"
-if ! docker-compose build; then
-    echo -e "${RED}❌ Build failed. Trying with --no-cache...${NC}"
-    docker-compose build --no-cache
-fi
+echo -e "${YELLOW}🔨 Building containers (without canvas)...${NC}"
+docker-compose -f docker-compose.nocanvas.yml build
 
 echo -e "${YELLOW}🚀 Starting containers...${NC}"
-docker-compose up -d
+docker-compose -f docker-compose.nocanvas.yml up -d
 
 # Wait for database to be ready
 echo -e "${YELLOW}⏳ Waiting for database to be ready...${NC}"
@@ -41,11 +38,11 @@ sleep 10
 
 # Run database migrations
 echo -e "${YELLOW}📊 Running database migrations...${NC}"
-docker-compose exec app npx prisma migrate deploy
+docker-compose -f docker-compose.nocanvas.yml exec app npx prisma migrate deploy
 
 # Generate Prisma client
 echo -e "${YELLOW}🔧 Generating Prisma client...${NC}"
-docker-compose exec app npx prisma generate
+docker-compose -f docker-compose.nocanvas.yml exec app npx prisma generate
 
 echo ""
 echo -e "${GREEN}✨ Magical Board is now running! ✨${NC}"
@@ -56,8 +53,8 @@ echo -e "${GREEN}   Email: admin@magical-board.com${NC}"
 echo -e "${GREEN}   Password: admin${NC}"
 echo ""
 echo -e "${YELLOW}📋 Useful commands:${NC}"
-echo "  View logs:        docker-compose logs -f"
-echo "  Stop containers:  docker-compose down"
-echo "  Restart:          docker-compose restart"
-echo "  Database shell:   docker-compose exec postgres psql -U magical_user -d magical_board"
+echo "  View logs:        docker-compose -f docker-compose.nocanvas.yml logs -f"
+echo "  Stop containers:  docker-compose -f docker-compose.nocanvas.yml down"
+echo "  Restart:          docker-compose -f docker-compose.nocanvas.yml restart"
+echo "  Database shell:   docker-compose -f docker-compose.nocanvas.yml exec postgres psql -U magical_user -d magical_board"
 echo ""
