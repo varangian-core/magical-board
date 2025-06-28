@@ -43,6 +43,13 @@ export default function NavigationSidebar() {
       active: pathname === '/'
     },
     {
+      id: 'manage',
+      label: 'Manage Boards',
+      icon: '📋',
+      href: '/boards',
+      active: pathname === '/boards'
+    },
+    {
       id: 'boards',
       label: 'Recent Boards',
       icon: '✨',

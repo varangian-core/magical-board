@@ -48,6 +48,8 @@ class BoardStorage {
     const updatedBoard = {
       ...board,
       ...updates,
+      id: board.id, // Ensure ID doesn't change
+      createdAt: board.createdAt, // Ensure creation date doesn't change
       updatedAt: new Date()
     }
     
