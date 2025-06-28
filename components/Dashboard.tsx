@@ -73,17 +73,8 @@ export default function Dashboard({ currentUser, onUserSwitch, onNewUser }: Dash
       <div className="relative z-10">
         {/* Header */}
         <header className="p-6">
-          <div className="max-w-7xl mx-auto flex justify-between items-center">
-            <motion.h1 
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl font-bold text-white flex items-center gap-3"
-            >
-              <span className="text-5xl">✨</span>
-              Magical Board
-            </motion.h1>
-
-            <div className="flex items-center gap-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex justify-end items-center gap-4">
               {currentUser ? (
                 <motion.div 
                   initial={{ opacity: 0, scale: 0.9 }}

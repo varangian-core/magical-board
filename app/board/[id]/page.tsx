@@ -9,7 +9,7 @@ import ErrorBoundary from '@/components/ErrorBoundary'
 const BoardCanvas = dynamic(() => import('@/components/BoardCanvas'), {
   ssr: false,
   loading: () => (
-    <div className="h-screen w-screen flex items-center justify-center bg-gradient-starry">
+    <div className="h-screen w-full flex items-center justify-center bg-gradient-starry">
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
@@ -32,7 +32,7 @@ export default function BoardPage() {
 
   if (!mounted) {
     return (
-      <div className="h-screen w-screen flex items-center justify-center bg-gradient-starry">
+      <div className="h-screen w-full flex items-center justify-center bg-gradient-starry">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
@@ -46,7 +46,7 @@ export default function BoardPage() {
 
   return (
     <ErrorBoundary>
-      <div className="h-screen w-screen overflow-hidden">
+      <div className="h-screen w-full overflow-hidden relative">
         <BoardCanvas boardId={boardId} />
       </div>
     </ErrorBoundary>
